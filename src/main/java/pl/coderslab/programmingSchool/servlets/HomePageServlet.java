@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @WebServlet("/")
 public class HomePageServlet extends HttpServlet {
@@ -25,14 +26,15 @@ public class HomePageServlet extends HttpServlet {
 
         try (Connection conn = DbUtil.getConnection()) {
 
-             Solution solution = new Solution();
-             int solutionsNumber = getSolutionsNumber();
-             Solution.loadAllSolutionsLimited(conn, solutionsNumber);
+            int solutionsNumber = getSolutionsNumber();
+            ArrayList<Solution> solutions = Solution.loadAllSolutionsLimited(conn, solutionsNumber);
 
-             resp.getWriter().println(solutionsNumber);
+            req.setAttribute("solutions", solutions);
+            getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
+
 
         } catch (SQLException e) {
-            resp.getWriter().println("Nie udało się połączyć z bazą danych!");
+            resp.getWriter().println("Błąd!");
         }
 
     }

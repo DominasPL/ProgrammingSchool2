@@ -198,7 +198,9 @@ public class Solution {
 
     public static ArrayList<Solution> loadAllSolutionsLimited(Connection conn, int limit) throws SQLException { //Wczytanie wszystkich uzytkownikow
         ArrayList<Solution> solutions = new ArrayList<>();
-        String query = "SELECT * FROM solution ORDER BY created LIMIT ?;";
+        String query = "SELECT * FROM solution \n" +
+                "ORDER BY exercise_id DESC\n" +
+                "LIMIT ?;";
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         preparedStatement.setInt(1, limit);
         ResultSet resultSet = preparedStatement.executeQuery();
