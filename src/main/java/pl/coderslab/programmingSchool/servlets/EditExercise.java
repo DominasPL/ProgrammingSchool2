@@ -1,7 +1,6 @@
 package pl.coderslab.programmingSchool.servlets;
 
-import org.apache.log4j.Logger;
-import pl.coderslab.programmingSchool.models.Solution;
+import pl.coderslab.programmingSchool.models.Exercise;
 import pl.coderslab.programmingSchool.models.UserGroup;
 import pl.coderslab.programmingSchool.utils.DbUtil;
 
@@ -14,10 +13,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet("/admin/group_managing/edit_group")
-public class EditGroup extends HttpServlet {
-
-    public static final Logger logger = Logger.getLogger(EditGroup.class);
+@WebServlet("/admin/exercise_managing/edit_exercise")
+public class EditExercise extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,7 +23,7 @@ public class EditGroup extends HttpServlet {
         int id = Integer.parseInt(param1);
 
         req.setAttribute("id", id);
-        getServletContext().getRequestDispatcher("/WEB-INF/views/edit_group.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/views/edit_exercise.jsp").forward(req, resp);
 
     }
 
@@ -34,24 +31,27 @@ public class EditGroup extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String param1 = req.getParameter("id");
-        String param2 = req.getParameter("name");
+        String param2 = req.getParameter("title");
+        String param3 = req.getParameter("description");
 
 
         int id = Integer.parseInt(param1);
 
         try (Connection conn = DbUtil.getConnection()) {
 
-            UserGroup userGroup = UserGroup.loadGroupByID(conn, id);
-            userGroup.setName(param2);
-            userGroup.saveGroupToDb(conn);
+            Exercise exercise = Exercise.loadExerciseById(conn, id);
+            exercise.setTitle(param2);
+            exercise.setDescription(param3);
 
-            resp.sendRedirect("/admin/group_managing");
+            exercise.saveToDb(conn);
+
+            resp.sendRedirect("/admin/exercise_managing");
 
         } catch (SQLException e) {
             resp.getWriter().println("Błąd!");
         }
 
-
-
     }
 }
+
+

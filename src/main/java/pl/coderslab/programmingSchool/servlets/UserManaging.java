@@ -1,6 +1,7 @@
 package pl.coderslab.programmingSchool.servlets;
 
-import org.apache.log4j.Logger;
+
+import pl.coderslab.programmingSchool.models.User;
 import pl.coderslab.programmingSchool.models.UserGroup;
 import pl.coderslab.programmingSchool.utils.DbUtil;
 
@@ -14,11 +15,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-@WebServlet("/admin/group_managing")
-public class GroupManaging extends HttpServlet {
-
-    public static final Logger logger = Logger.getLogger(GroupManaging.class);
-
+@WebServlet("/admin/user_managing")
+public class UserManaging extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,20 +24,16 @@ public class GroupManaging extends HttpServlet {
 
         try (Connection conn = DbUtil.getConnection()) {
 
-            ArrayList<UserGroup> userGroups = UserGroup.loadAllGroups(conn);
+            ArrayList<User> users = User.loadAllUsers(conn);
 
-            req.setAttribute("userGroups", userGroups);
-            getServletContext().getRequestDispatcher("/WEB-INF/views/group_managing.jsp").forward(req, resp);
+            req.setAttribute("users", users);
+            getServletContext().getRequestDispatcher("/WEB-INF/views/user_managing.jsp").forward(req, resp);
 
         } catch (SQLException e) {
             resp.getWriter().println("Błąd!");
         }
 
 
-    }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
     }
 }

@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Panel administratora</title>
+    <title>Zadania</title>
     <jsp:include page="/WEB-INF/views/fragments/bootstrap.jsp"/>
 </head>
 <body>
@@ -17,17 +17,28 @@
             <table class="table table-bordered">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col" colspan="3">Linki do stron</th>
+                    <th scope="col">Lp.</th>
+                    <th scope="col">Id zadania</th>
+                    <th scope="col">Tytuł zadania</th>
+                    <th scope="col">Opis zadania</th>
+                    <th scope="col">Edycja zadania</th>
                 </tr>
                 </thead>
                 <tbody>
+                <c:forEach items="${exercises}" var="exercise" varStatus="stat">
                     <tr>
-                        <td><a href="/admin/exercise_managing">Lista zadań</a></td>
-                        <td><a href="/admin/group_managing">Lista grup użytkowników</a></td>
-                        <td><a href="/admin/user_managing">Lista uzytkowników</a></td>
+                        <td>${stat.count}</td>
+                        <td>${exercise.id}</td>
+                        <td>${exercise.title}</td>
+                        <td>${exercise.description}</td>
+                        <td><a href="/admin/exercise_managing/edit_exercise?id=${exercise.id}">Link</a></td>
                     </tr>
+                </c:forEach>
                 </tbody>
             </table>
+
+            <input type="button" value="Dodanie zadania" onclick="window.location.href='/admin/exercise_managing/add_exercise'">
+
         </div>
     </div>
 </div>

@@ -1,7 +1,6 @@
 package pl.coderslab.programmingSchool.servlets;
 
-import org.apache.log4j.Logger;
-import pl.coderslab.programmingSchool.models.Solution;
+import pl.coderslab.programmingSchool.models.User;
 import pl.coderslab.programmingSchool.models.UserGroup;
 import pl.coderslab.programmingSchool.utils.DbUtil;
 
@@ -14,10 +13,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet("/admin/group_managing/edit_group")
-public class EditGroup extends HttpServlet {
-
-    public static final Logger logger = Logger.getLogger(EditGroup.class);
+@WebServlet("/admin/user_managing/edit_user")
+public class EditUser extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,7 +23,7 @@ public class EditGroup extends HttpServlet {
         int id = Integer.parseInt(param1);
 
         req.setAttribute("id", id);
-        getServletContext().getRequestDispatcher("/WEB-INF/views/edit_group.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/views/edit_user.jsp").forward(req, resp);
 
     }
 
@@ -34,23 +31,29 @@ public class EditGroup extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String param1 = req.getParameter("id");
-        String param2 = req.getParameter("name");
+        String param2 = req.getParameter("group_id");
+        String param3 = req.getParameter("username");
+        String param4 = req.getParameter("password");
+        String param5 = req.getParameter("email");
 
 
         int id = Integer.parseInt(param1);
+        int group_id = Integer.parseInt(param2);
 
         try (Connection conn = DbUtil.getConnection()) {
+            User user = User.loadUserById(conn, id);
+            user.setGroup_id(group_id);
+            user.setUsername(param3);
+            user.setPassword(param4);
+            user.setEmail(param5);
 
-            UserGroup userGroup = UserGroup.loadGroupByID(conn, id);
-            userGroup.setName(param2);
-            userGroup.saveGroupToDb(conn);
+            user.saveUserToDb(conn);
 
-            resp.sendRedirect("/admin/group_managing");
+            resp.sendRedirect("/admin/user_managing");
 
         } catch (SQLException e) {
             resp.getWriter().println("Błąd!");
         }
-
 
 
     }
