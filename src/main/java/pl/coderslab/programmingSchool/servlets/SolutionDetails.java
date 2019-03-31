@@ -2,6 +2,7 @@ package pl.coderslab.programmingSchool.servlets;
 
 
 import org.apache.log4j.Logger;
+import pl.coderslab.programmingSchool.dao.SolutionDao;
 import pl.coderslab.programmingSchool.models.Solution;
 import pl.coderslab.programmingSchool.utils.DbUtil;
 
@@ -31,7 +32,7 @@ public class SolutionDetails extends HttpServlet {
 
             try (Connection conn = DbUtil.getConnection()) {
 
-                Solution solution = Solution.loadSolutionById(conn, id);
+                Solution solution = SolutionDao.loadSolutionById(conn, id);
 
                 req.setAttribute("solution", solution);
                 getServletContext().getRequestDispatcher("/WEB-INF/views/solution_details.jsp").forward(req, resp);

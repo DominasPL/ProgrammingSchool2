@@ -1,5 +1,6 @@
 package pl.coderslab.programmingSchool.servlets;
 
+import pl.coderslab.programmingSchool.dao.ExerciseDao;
 import pl.coderslab.programmingSchool.models.Exercise;
 import pl.coderslab.programmingSchool.utils.DbUtil;
 
@@ -34,7 +35,7 @@ public class AddExercise extends HttpServlet {
             exercise.setTitle(param2);
             exercise.setDescription(param3);
 
-            exercise.saveToDb(conn);
+            ExerciseDao.saveToDb(conn, exercise);
 
             resp.sendRedirect("/admin/exercise_managing");
 

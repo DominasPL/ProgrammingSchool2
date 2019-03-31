@@ -1,6 +1,7 @@
 package pl.coderslab.programmingSchool.servlets;
 
 
+import pl.coderslab.programmingSchool.dao.UserDao;
 import pl.coderslab.programmingSchool.models.User;
 import pl.coderslab.programmingSchool.models.UserGroup;
 import pl.coderslab.programmingSchool.utils.DbUtil;
@@ -24,7 +25,7 @@ public class UserManaging extends HttpServlet {
 
         try (Connection conn = DbUtil.getConnection()) {
 
-            ArrayList<User> users = User.loadAllUsers(conn);
+            ArrayList<User> users = UserDao.loadAllUsers(conn);
 
             req.setAttribute("users", users);
             getServletContext().getRequestDispatcher("/WEB-INF/views/user_managing.jsp").forward(req, resp);

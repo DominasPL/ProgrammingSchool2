@@ -2,6 +2,8 @@ package pl.coderslab.programmingSchool.servlets;
 
 
 import org.apache.log4j.Logger;
+import pl.coderslab.programmingSchool.dao.SolutionDao;
+import pl.coderslab.programmingSchool.dao.UserDao;
 import pl.coderslab.programmingSchool.models.Solution;
 import pl.coderslab.programmingSchool.models.User;
 import pl.coderslab.programmingSchool.utils.DbUtil;
@@ -32,8 +34,8 @@ public class UserDetails extends HttpServlet {
 
             try (Connection conn = DbUtil.getConnection()) {
 
-                User user = User.loadUserById(conn, id);
-                ArrayList<Solution> userSolutions = Solution.loadAllSolutionsByUserId(conn, id);
+                User user = UserDao.loadUserById(conn, id);
+                ArrayList<Solution> userSolutions = SolutionDao.loadAllSolutionsByUserId(conn, id);
 
                 req.setAttribute("user", user);
                 req.setAttribute("userSolutions", userSolutions);

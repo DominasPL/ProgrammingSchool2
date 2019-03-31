@@ -1,6 +1,7 @@
 package pl.coderslab.programmingSchool.servlets;
 
 
+import pl.coderslab.programmingSchool.dao.ExerciseDao;
 import pl.coderslab.programmingSchool.models.Exercise;
 import pl.coderslab.programmingSchool.models.UserGroup;
 import pl.coderslab.programmingSchool.utils.DbUtil;
@@ -23,7 +24,7 @@ public class ExerciseManaging extends HttpServlet {
 
         try (Connection conn = DbUtil.getConnection()) {
 
-            ArrayList<Exercise> exercises = Exercise.loadAllExercises(conn);
+            ArrayList<Exercise> exercises = ExerciseDao.loadAllExercises(conn);
 
             req.setAttribute("exercises", exercises);
             getServletContext().getRequestDispatcher("/WEB-INF/views/exercise_managing.jsp").forward(req, resp);

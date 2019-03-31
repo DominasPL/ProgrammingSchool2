@@ -1,5 +1,6 @@
 package pl.coderslab.programmingSchool.servlets;
 
+import pl.coderslab.programmingSchool.dao.UserDao;
 import pl.coderslab.programmingSchool.models.User;
 import pl.coderslab.programmingSchool.models.UserGroup;
 import pl.coderslab.programmingSchool.utils.DbUtil;
@@ -36,19 +37,19 @@ public class EditUser extends HttpServlet {
         String param4 = req.getParameter("password");
         String param5 = req.getParameter("email");
 
-
         int id = Integer.parseInt(param1);
         int group_id = Integer.parseInt(param2);
 
         try (Connection conn = DbUtil.getConnection()) {
-            User user = User.loadUserById(conn, id);
-            user.setGroup_id(group_id);
-            user.setUsername(param3);
-            user.setPassword(param4);
-            user.setEmail(param5);
+            User user = UserDao.loadUserById(conn, id);
+            if (user != null) {
+                user.setGroup_id(group_id);
+                user.setUsername(param3);
+                user.setPassword(param4);
+                user.setEmail(param5);
+                UserDao.saveUserToDb(conn, user);
 
-            user.saveUserToDb(conn);
-
+            }
             resp.sendRedirect("/admin/user_managing");
 
         } catch (SQLException e) {

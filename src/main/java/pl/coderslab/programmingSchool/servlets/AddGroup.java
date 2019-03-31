@@ -2,6 +2,7 @@ package pl.coderslab.programmingSchool.servlets;
 
 
 import org.apache.log4j.Logger;
+import pl.coderslab.programmingSchool.dao.UserGroupDao;
 import pl.coderslab.programmingSchool.models.UserGroup;
 import pl.coderslab.programmingSchool.utils.DbUtil;
 
@@ -36,7 +37,7 @@ public class AddGroup extends HttpServlet {
 
             UserGroup userGroup = new UserGroup();
             userGroup.setName(param1);
-            userGroup.saveGroupToDb(conn);
+            UserGroupDao.saveGroupToDb(conn, userGroup);
 
             resp.sendRedirect("/admin/group_managing");
 

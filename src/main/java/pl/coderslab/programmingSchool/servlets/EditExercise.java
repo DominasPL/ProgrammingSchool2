@@ -1,5 +1,6 @@
 package pl.coderslab.programmingSchool.servlets;
 
+import pl.coderslab.programmingSchool.dao.ExerciseDao;
 import pl.coderslab.programmingSchool.models.Exercise;
 import pl.coderslab.programmingSchool.models.UserGroup;
 import pl.coderslab.programmingSchool.utils.DbUtil;
@@ -39,11 +40,11 @@ public class EditExercise extends HttpServlet {
 
         try (Connection conn = DbUtil.getConnection()) {
 
-            Exercise exercise = Exercise.loadExerciseById(conn, id);
+            Exercise exercise = ExerciseDao.loadExerciseById(conn, id);
             exercise.setTitle(param2);
             exercise.setDescription(param3);
 
-            exercise.saveToDb(conn);
+            ExerciseDao.saveToDb(conn, exercise);
 
             resp.sendRedirect("/admin/exercise_managing");
 

@@ -1,6 +1,7 @@
 package pl.coderslab.programmingSchool.servlets;
 
 import org.apache.log4j.Logger;
+import pl.coderslab.programmingSchool.dao.UserGroupDao;
 import pl.coderslab.programmingSchool.models.Solution;
 import pl.coderslab.programmingSchool.models.UserGroup;
 import pl.coderslab.programmingSchool.utils.DbUtil;
@@ -41,9 +42,9 @@ public class EditGroup extends HttpServlet {
 
         try (Connection conn = DbUtil.getConnection()) {
 
-            UserGroup userGroup = UserGroup.loadGroupByID(conn, id);
+            UserGroup userGroup = UserGroupDao.loadGroupByID(conn, id);
             userGroup.setName(param2);
-            userGroup.saveGroupToDb(conn);
+            UserGroupDao.saveGroupToDb(conn, userGroup);
 
             resp.sendRedirect("/admin/group_managing");
 

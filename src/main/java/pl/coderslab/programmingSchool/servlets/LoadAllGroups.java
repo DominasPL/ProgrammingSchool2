@@ -2,6 +2,7 @@ package pl.coderslab.programmingSchool.servlets;
 
 
 import org.apache.log4j.Logger;
+import pl.coderslab.programmingSchool.dao.UserGroupDao;
 import pl.coderslab.programmingSchool.models.Solution;
 import pl.coderslab.programmingSchool.models.UserGroup;
 import pl.coderslab.programmingSchool.utils.DbUtil;
@@ -27,7 +28,7 @@ public class LoadAllGroups extends HttpServlet {
 
         try (Connection conn = DbUtil.getConnection()) {
 
-            ArrayList<UserGroup> userGroups = UserGroup.loadAllGroups(conn);
+            ArrayList<UserGroup> userGroups = UserGroupDao.loadAllGroups(conn);
 
             req.setAttribute("userGroups", userGroups);
             getServletContext().getRequestDispatcher("/WEB-INF/views/groups.jsp").forward(req, resp);

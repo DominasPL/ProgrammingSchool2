@@ -1,5 +1,6 @@
 package pl.coderslab.programmingSchool.servlets;
 
+import pl.coderslab.programmingSchool.dao.UserDao;
 import pl.coderslab.programmingSchool.models.User;
 import pl.coderslab.programmingSchool.models.UserGroup;
 import pl.coderslab.programmingSchool.utils.DbUtil;
@@ -40,7 +41,7 @@ public class AddUser extends HttpServlet {
             user.setPassword(param4);
             user.setEmail(param5);
 
-            user.saveUserToDb(conn);
+            UserDao.saveUserToDb(conn, user);
 
             resp.sendRedirect("/admin/user_managing");
 

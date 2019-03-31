@@ -2,6 +2,7 @@ package pl.coderslab.programmingSchool.servlets;
 
 
 import org.apache.log4j.Logger;
+import pl.coderslab.programmingSchool.dao.SolutionDao;
 import pl.coderslab.programmingSchool.models.Solution;
 import pl.coderslab.programmingSchool.utils.DbUtil;
 
@@ -27,7 +28,7 @@ public class HomePageServlet extends HttpServlet {
         try (Connection conn = DbUtil.getConnection()) {
 
             int solutionsNumber = getSolutionsNumber();
-            ArrayList<Solution> solutions = Solution.loadAllSolutionsLimited(conn, solutionsNumber);
+            ArrayList<Solution> solutions = SolutionDao.loadAllSolutionsLimited(conn, solutionsNumber);
 
             req.setAttribute("solutions", solutions);
             getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
