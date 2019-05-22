@@ -6,21 +6,21 @@ Celem warsztatów było wykonanie projektu szkoły programowania z wykorzystanie
 Projekt wykorzystuje warstwę dostępu do danych wykonaną podczas poprzedniego warsztatu.
 
 ## Funkcjonalności
-Zarządzanie zadaniami
+Zarządzanie zadaniami.
 Aplikacja posiada następujące możliwości:
 - przeglądanie,
 - dodawanie,
 - usuwanie,
 - edycja zadań.
 
-Zarządzanie rozwiązaniami zadań
+Zarządzanie rozwiązaniami zadań.
 Aplikacja posiada następujące możliwości:
 - przeglądanie,
 - dodawanie,
 - usuwanie,
 - edycja rozwiązania do zadania.
 
-Zarządzanie użytkownikami
+Zarządzanie użytkownikami.
 Aplikacja umożliwia zarządzanie użytkownikami:
 - przeglądanie,
 - dodawanie,
